@@ -31,11 +31,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class FxCopFileProcessor {
   private enum PassType {
-    ISSUES, RULES
+    ISSUES, RULES;
   }
 
   private enum EntityType {
-    TARGET, RESOURCE, NAMESPACE, TYPE, MEMBER, ACCESSOR
+    TARGET, RESOURCE, NAMESPACE, TYPE, MEMBER, ACCESSOR;
   }
 
   private final Stack<String> myMessageInspectionId = new Stack<String>();
@@ -55,7 +55,9 @@ public class FxCopFileProcessor {
   private final InspectionReporter myReporter;
   private HierarchicalStreamReader myStream = null;
 
-  private int myErrorsCount, myWarningsCount;
+  private int myErrorsCount;
+
+  private int myWarningsCount;
 
   public FxCopFileProcessor(@NotNull final File fxcopReport,
                             @NotNull final String sourceFilePrefix,
@@ -120,7 +122,7 @@ public class FxCopFileProcessor {
         myLogger.error(getMessage(nodeName) + (StringUtil.isEmpty(additionalDetails) ? "" : ": " + additionalDetails));
       } catch (IllegalAccessException e) {
         Loggers.AGENT.debug(getMessage(nodeName), e);
-        myLogger.error(getMessage(nodeName) + ":" + e.toString());
+        myLogger.error(getMessage(nodeName) + ":" + e);
       } catch (RuntimeException e) {
         // Java 9
         if (!"java.lang.reflect.InaccessibleObjectException".equals(e.getClass().getName())) throw e;
@@ -435,3 +437,8 @@ public class FxCopFileProcessor {
     return myWarningsCount;
   }
 }
+
+
+
+
+
